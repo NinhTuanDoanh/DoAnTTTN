@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SWISS</title>
+
+  <div th:replace="fragments/style :: style"></div>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+
+  <!-- Navbar -->
+<div th:replace="fragments/navbar ::navbar"></div>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+<div th:replace="fragments/sidebar ::sidebar"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Button to Open the Modal -->
+            <a class="btn btn-primary" th:href="@{/adduser}" role="button"> Add Account</a>
+            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th class="th-sm">Email
+                </th>
+                <th class="th-sm">Password
+                </th>
+                <th class="th-sm">Adress
+                </th>
+                <th class="th-sm">Phone
+                </th>
+                <th class="th-sm">Role
+                </th>
+                <th class="th-sm">Create Date
+                </th>
+                <th class="th-sm">Update Date
+                </th>
+                <th class="th-sm">Option
+                </th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="account :${accountList}">
+                <td th:text="${account.getEmail()}"></td>
+                <td th:text="${account.getPassword()}">/td>
+                <td th:text="${account.getAddress()}"></td>
+                <td th:text="${account.getPhone()}">Sidney</td>
+                <td th:text="${account.getRole()}"></td>
+                <td th:text="${#dates.format(account.getCreateat(), 'yyyy/MM/dd')}"></td>
+                <td th:text="${#dates.format(account.getUpdateat(), 'yyyy/MM/dd')}"></td>
+                <td><a style="margin:0 10px 0 10px;cursor: pointer;"><i class="fas fa-edit"></i></a><a style="margin:0 10px 0 10px;cursor: pointer;" th:href="@{/deleteaccount(id=${account.getUserid()})}"><i class="far fa-trash-alt"></i></a></td>
+
+              </tr>
+
+              </tbody>
+
+            </table>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+<div th:replace="fragments/footer ::footer"></div>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<div th:replace="fragments/script ::script"></div>
+</body>
+</html>

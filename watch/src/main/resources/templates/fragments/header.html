@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<header class="header-area header-in-container clearfix" th:fragment="header">
+    <div class="header-bottom sticky-bar header-res-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-2 col-lg-2 col-md-6 col-4">
+                    <div class="logo">
+                        <a th:href="@{/}">
+                            <img alt="" src="assets/img/logo/logo.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav>
+                            <ul>
+                                <li><a th:href="@{/}">Home</a>
+                                </li>
+                                <li><a th:href="@{/shop}"> Shop</a>
+                                </li>
+                                <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a th:href="@{/login}">login </a></li>
+                                        <li><a th:href="@{register}">register </a></li>
+                                        <li><a href="cart-page.html">cart page</a></li>
+                                        <li><a href="checkout.html">checkout </a></li>
+                                        <li><a href="wishlist.html">wishlist </a></li>
+                                        <li><a href="my-account.html">my account</a></li>
+
+
+                                    </ul>
+                                </li>
+                                <li><a>Brand<i class="fa fa-angle-down"></i></a>
+                                    <ul class="submenu" >
+                                        <li th:each="brand : ${brand}"><a th:text="${brand.getName()}">blog standard</a></li>
+                                    </ul>
+                                </li>
+                                <li><a th:href="@{about}"> About </a></li>
+                                <li><a th:href="@{contact}"> Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-6 col-8">
+                    <div class="header-right-wrap">
+                        <div class="same-style header-search">
+                            <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
+                            <div class="search-content">
+                                <form action="#">
+                                    <input type="text" placeholder="Search" />
+                                    <button class="button-search"><i class="pe-7s-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="same-style account-satting">
+                            <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
+                            <div class="account-dropdown">
+                                <ul>
+                                    <li><a th:href="@{/login}">Login</a></li>
+                                    <li><a th:href="@{/register}">Register</a></li>
+                                    <li><a href="wishlist.html">Wishlist  </a></li>
+                                    <li><a th:href="@{myaccount}">my account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="same-style header-wishlist">
+                            <a href="wishlist.html"><i class="pe-7s-like"></i></a>
+                        </div>
+                        <div class="same-style cart-wrap">
+                            <button class="icon-cart">
+                                <i class="pe-7s-shopbag"></i>
+                                <span class="count-style" th:text="${session.myCartNum}">02</span>
+                            </button>
+                            <div class="shopping-cart-content">
+                                <ul>
+                                    <li class="single-shopping-cart" th:each="myCartItems :${session.myCartItems}">
+                                        <div class="shopping-cart-img">
+                                            <a href="#"><img style="width: 100px;height: 100px;" alt="" th:src="${myCartItems.getValue().getProduct().getProductImageList().get(0).getUrl()}"></a>
+                                        </div>
+                                        <div class="shopping-cart-title">
+                                            <h4><a href="#" th:text="${myCartItems.getValue().getProduct().getProductname()}">T- Shart & Jeans </a></h4>
+                                            <h6 th:text="'Qty: '+${myCartItems.getValue().getQuantity()}"></h6>
+                                            <span th:text="${#numbers.formatCurrency(myCartItems.getValue().getProduct().getPrice())}">$260.00</span>
+                                        </div>
+                                        <div class="shopping-cart-delete">
+                                            <a th:href="@{/cart/remove(id=${myCartItems.getValue().getProduct().getProductid()})}"><i class="fa fa-times-circle"></i></a>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <div class="shopping-cart-total">
+                                    <!--<h4>Shipping : <span>$20.00</span></h4>-->
+                                    <h4>Total : <span class="shop-total" th:text="${#numbers.formatCurrency(session.myCartTotal)}">$260.00</span></h4>
+                                </div>
+                                <div class="shopping-cart-btn btn-hover text-center">
+                                    <a class="default-btn" th:href="@{/cart}">view cart</a>
+                                    <a class="default-btn" th:href="@{checkout}">checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

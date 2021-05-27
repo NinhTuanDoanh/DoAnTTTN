@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SWISS</title>
+
+    <div th:replace="fragments/style :: style"></div>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar ::sidebar"></div>
+    <!-- /.sidebar -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <form th:action="@{/addproduct1}" method="post" th:object="${products}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" class="form-control" id="exampleProdcutName" placeholder="Enter Product Name" th:field="*{productname}">
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="text" class="form-control" id="examplePrice" placeholder="Enter Price" th:field="*{price}">
+                            </div>
+                            <div class="form-group">
+                                <label>Sale</label>
+                                <input type="text" class="form-control" id="exampleSale" placeholder="Enter Sale" th:field="*{sale}">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" id="exampleDescription" rows="3" th:field="*{description}"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Image</label>
+                                <input type="file" class="form-control-file" name="files" id="exampleFormControlFile1" multiple>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text" class="form-control" id="quantity" placeholder="Enter Quantity" th:field="*{quantity}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Brand</label>
+                                <select class="form-control" id="exampleFormControlSelect1" th:field="*{brandid}">
+
+                                    <option  th:each="brand : ${brandList}" th:value="${brand.getIdmanufacturer()}" th:text="${brand.getName()}">1</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<div th:replace="fragments/script :: script"></div>
+</body>
+</html>

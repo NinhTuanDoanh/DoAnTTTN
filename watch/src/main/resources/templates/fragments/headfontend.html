@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<div class="container-fluid" th:fragment="head">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" th:each="product :${products}">
+            <div class="product-wrap-3 mb-20 scroll-zoom">
+                <div class="product-img">
+                    <img th:src="@{${product.getProductImageList().get(0).getUrl()}}" alt="">
+                    <span class="pink" th:if="${product.getSale() !=0}"><span th:text="'-'+*{product.getSale()}+'%'"></span></span>
+
+                    <div class="product-content-3-wrap">
+                        <div class="product-content-3">
+                            <div class="product-title">
+                                <h3><a th:href="@{/productdetail(productId=${product.getProductid()})}"  th:text="*{product.getProductname()}"></a></h3>
+                            </div>
+                            <div class="price-3">
+                                            <span th:if="${product.getSale() !=0}">
+                                                <span th:text="${#numbers.formatCurrency((product.getPrice() *(((100) - (product.getSale())))/100))}"></span>
+                                                <span class="old" th:text="*{#numbers.formatCurrency(product.getPrice())}"></span>
+                                            </span>
+                                <span th:unless="${product.getSale()!=0}">
+                                                <span th:text="*{#numbers.formatCurrency(product.getPrice())}"></span>
+                                            </span>
+                            </div>
+                            <div class="product-action-3">
+                                <a title="Add To Cart" th:href="@{/cart/add(id=${product.getProductid()})}"><i class="fa fa-shopping-cart"></i></a>
+                                <a title="Quick View" th:href="@{/productdetail(productId=${product.getProductid()})}"><i class="fa fa-eye"></i></a>
+                                <a title="Compare" href="#"><i class="fa fa-retweet"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

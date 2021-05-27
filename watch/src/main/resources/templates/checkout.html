@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Flone - Minimalist eCommerce Bootstrap 4 Template - SHARED ON THEMELOCK.COM</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    
+    <!-- CSS
+	============================================ -->
+   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" href="assets/css/icons.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/css/plugins.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Modernizer JS -->
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header" ></div>
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active">Checkout </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="checkout-area pt-95 pb-100">
+    <div class="container">
+        <form th:action="@{/save}" th:object="${orderDto}" method="post">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="billing-info-wrap">
+                    <h3>Billing Details</h3>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="billing-info mb-20">
+                                <label>Your Name</label>
+                                <input type="text" th:field="*{receiver_name}" required placeholder="Enter name">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="billing-info mb-20">
+                                <label>Address</label>
+                                <input class="billing-address" placeholder="House number and street name" type="text" th:field="*{receiver_address}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="billing-info mb-20">
+                                <label>Phone</label>
+                                <input type="text" th:field="*{receiver_phone}" placeholder="Enter phone" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="billing-info mb-20">
+                                <label>Email Address</label>
+                                <input type="email" th:field="*{receiver_email}" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12"><p>*Lưu ý: Flone sẽ liên lạc lại với bạn trong 24h để xác nhận đơn hàng.</p></div>
+                        <div class="col-lg-12 col-md-12"><h3>HOTLINE: 0355813306</h3></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="your-order-area">
+                    <h3>Your order</h3>
+                    <div class="your-order-wrap gray-bg-4">
+                        <div class="your-order-product-info">
+                            <div class="your-order-top">
+                                <ul>
+                                    <li>Product</li>
+                                    <li>Total</li>
+                                </ul>
+                            </div>
+                            <div class="your-order-middle" th:each="item : ${session.myCartItems}">
+                                <ul>
+                                    <li>
+                                        <span class="order-middle-left" th:text="${item.getValue().getProduct().getProductname()}+' X ' + ${item.getValue().getQuantity()}">Product Name  X  1</span>
+                                        <span class="order-price">
+                                            <span th:if="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency(((item.getValue().getProduct().getPrice()*(((100) - (item.getValue().getProduct().getSale()))))/100)*item.getValue().getQuantity())}" th:field="*{price}"></span>
+                                            </span>
+                                        <span th:unless="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency((item.getValue().getProduct().getPrice())*item.getValue().getQuantity())}" th:field="*{price}"></span>
+                                            </span>
+                                        </span></li>
+                                </ul>
+                            </div>
+                            <div class="your-order-bottom">
+                                <ul>
+                                    <li class="your-order-shipping">Shipping</li>
+                                    <li>Free shipping</li>
+                                </ul>
+                            </div>
+                            <div class="your-order-total">
+                                <ul>
+                                    <li class="order-total">Total</li>
+                                    <li th:text="${#numbers.formatCurrency(session.myCartTotal)}">$329</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Place-order mt-25">
+                        <button class="btn-hover" type="submit" style="background-color: #a749ff;
+  color: #fff;
+  display: block;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1;
+  padding: 18px 180px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50px;
+  z-index: 9;">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/footerfont ::footerfont"></div>
+
+
+
+
+
+
+
+
+
+<!-- JS
+============================================ -->
+
+<!-- jQuery JS -->
+<script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- Popper JS -->
+<script src="assets/js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- Plugins JS -->
+<script src="assets/js/plugins.js"></script>
+<!-- Ajax Mail -->
+<script src="assets/js/ajax-mail.js"></script>
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

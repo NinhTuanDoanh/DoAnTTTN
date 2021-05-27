@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Flone - Minimalist eCommerce Bootstrap 4 Template - SHARED ON THEMELOCK.COM</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.png}">
+    
+    <!-- CSS
+	============================================ -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/icons.min.css}">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- Modernizer JS -->
+    <script th:src="@{/assets/js/vendor/modernizr-2.8.3.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header" ></div>
+<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active">Cart Page </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="cart-main-area pt-90 pb-100">
+    <div class="container">
+        <h3 class="cart-page-title">Your cart items</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Until Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody th:each="item : ${session.myCartItems}">
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <a href="#"><img style="width: 100px;height: 100px;" th:src="${item.getValue().getProduct().getProductImageList().get(0).getUrl()}" alt=""></a>
+                                    </td>
+                                    <td class="product-name"><a href="#"  th:text="${item.getValue().getProduct().getProductname()}"></a></td>
+                                    <td class="product-price-cart">
+                                        <span th:if="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency((item.getValue().getProduct().getPrice()*(((100) - (item.getValue().getProduct().getSale()))))/100)}"></span>
+                                            </span>
+                                        <span th:unless="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency((item.getValue().getProduct().getPrice()))}"></span>
+                                            </span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="ajax_qty">
+											<span style="cursor: pointer;">
+												<a th:href="@{/cart/update(flag=0,id=${item.getValue().getProduct().getProductid()})}">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</a>
+
+											</span>
+                                            <span th:text="${item.getValue().getQuantity()}" style="padding: 5px 10px; border: 1px solid #ccc; margin: 0 10px;"></span>
+                                            <span style="cursor: pointer;">
+												<a th:href="@{/cart/update(flag=1,id=${item.getValue().getProduct().getProductid()})}">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</a>
+
+											</span>
+                                        </div>
+<!--                                        <div class="cart-plus-minus">-->
+<!--                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" id="qtybutton" value="1">-->
+<!--                                        </div>-->
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span th:if="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency(((item.getValue().getProduct().getPrice()*(((100) - (item.getValue().getProduct().getSale()))))/100)*item.getValue().getQuantity())}"></span>
+                                            </span>
+                                        <span th:unless="${item.getValue().getProduct().getSale() !=0}">
+                                                <span class="amount"  th:text="${#numbers.formatCurrency((item.getValue().getProduct().getPrice())*item.getValue().getQuantity())}"></span>
+                                            </span>
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href=""><i class="fa fa-pencil"></i></a>
+                                        <a th:href="@{/cart/remove(id=${item.getValue().getProduct().getProductid()})}"><i class="fa fa-times"></i></a>
+                                   </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update">
+                                    <a th:href="@{/shop}">Continue Shopping</a>
+                                </div>
+                                <div class="cart-clear">
+                                    <a th:href="@{/cart/sub}">Update Shopping Cart</a>
+                                    <a th:href="@{/cart/clear}">Clear Shopping Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="grand-totall">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+                            </div>
+                            <h5>Total products <span th:text="${#numbers.formatCurrency(session.myCartTotal)}">$260.00</span></h5>
+                            <div class="total-shipping">
+                                <h5>Total shipping</h5>
+                                <ul>
+                                    <li><input type="checkbox"> Standard <span>20.000 d</span></li>
+                                    <li><input type="checkbox"> Express <span>20.000 d</span></li>
+                                </ul>
+                            </div>
+                            <h4 class="grand-totall-title">Grand Total  <span th:text="${#numbers.formatCurrency(session.myCartTotal)}">$260.00</span></h4>
+                            <a  type="button" th:href="@{/checkout}">Proceed to Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footerfont ::footerfont"></div>
+
+
+<!-- JS
+============================================ -->
+
+<!-- jQuery JS -->
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+<!-- Popper JS -->
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<!-- Plugins JS -->
+<script th:src="@{/assets/js/plugins.js}"></script>
+<!-- Ajax Mail -->
+<script th:src="@{/assets/js/ajax-mail.js}"></script>
+<!-- Main JS -->
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+
+</html>
